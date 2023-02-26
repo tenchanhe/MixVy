@@ -6,13 +6,13 @@ def grouping(n, group, allteam, allgame):
     for i in range(n):
         for j in range(i+1, n, 1):
             # n team
-            for k in range(32):
+            for k in range(28):
                 if(allteam[k].name == group[i]):
                     inA = int(k)
                     break
                 
             #n team
-            for k in range(32):
+            for k in range(28):
                 if(allteam[k].name == group[j]):
                     inB = int(k)
                     break
@@ -41,20 +41,20 @@ class Game:
         self.endgame = True
 
 if __name__ == "__main__":
-    sheet = pd.read_excel("time111.xlsx")
+    sheet = pd.read_excel("1112米克斯盃混排比賽出賽時間調查-回覆.xlsx")
     
     # print(sheet)
     
-    TA = ['資科','地政','外交','中文','日文','歐語','國貿','財管']
-    TB = ['民族','歷史','會計','斯語','傳院藍','英文','資管','社會']
-    TC = ['法律','企管','政治','應數','經濟','心理','創國','金融']
-    TD = ['統計','財政','公行','傳院白','阿語','土文','風管','哲學']
+    TA = ['資科','地政','中文','日文','歐語','國貿','財管']
+    TB = ['民族','歷史','斯語','傳院藍','英文','資管','社會']
+    TC = ['法律','企管','政治','經濟','心理','創國','金融']
+    TD = ['統計','財政','公行','傳院白','阿語','土文','風管']
     
 
     allteam = []
     #n team
-    for j in range(32):
-        line = sheet['無法出賽時間（最多三個時段）'][j].split(', ')
+    for j in range(28):
+        line = sheet['無法出賽時段（最多選擇三個時段）'][j].split(', ')
         timein = []
         #n time cannot
         for i in range(3):
@@ -95,16 +95,16 @@ if __name__ == "__main__":
             else:
                 print('Error')
         
-        allteam.append(Team(sheet['負責人系級'][j], timein))
+        allteam.append(Team(sheet['代表科系'][j], timein))
 
     # for i in range(32):
     #     print(allteam[i].name, allteam[i].time)
 
     allgame = []
-    allgame = grouping(8, TA, allteam, allgame)
-    allgame = grouping(8, TB, allteam, allgame)
-    allgame = grouping(8, TC, allteam, allgame)
-    allgame = grouping(8, TD, allteam, allgame)
+    allgame = grouping(7, TA, allteam, allgame)
+    allgame = grouping(7, TB, allteam, allgame)
+    allgame = grouping(7, TC, allteam, allgame)
+    allgame = grouping(7, TD, allteam, allgame)
                 
     print(len(allgame))
     # for i in range(len(allgame)):
@@ -152,5 +152,5 @@ if __name__ == "__main__":
                 if found == True:
                     break
             
-        print(teamthisweek)
+        #print(teamthisweek)
         print('')
