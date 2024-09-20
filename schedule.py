@@ -1,4 +1,4 @@
-# n team *2
+# n team *3 12 18 59
 # allgame row107
 
 import pandas as pd
@@ -10,16 +10,19 @@ def grouping(n, group, allteam, allgame):
         for j in range(i+1, n, 1):
             # n team
             for k in range(32):
+                # print(allteam[k].name, group[i])
                 if(allteam[k].name == group[i]):
                     inA = int(k)
                     break
                 
             #n team
             for k in range(32):
+                # print(allteam[k].name, group[i])
                 if(allteam[k].name == group[j]):
                     inB = int(k)
                     break
-                
+
+            # print(inA, inB)  
             allgame.append(Game(allteam[inA], allteam[inB], allteam[inA].time+allteam[inB].time))
     return allgame
 
@@ -44,55 +47,58 @@ class Game:
         self.endgame = True
 
 if __name__ == "__main__":
-    sheet = pd.read_excel("./112-1米克斯混排比賽報名表單-回覆.xlsx")
+    sheet = pd.read_excel("./113學年米克斯混排比賽預賽報名表單-回覆.xlsx")
     
     # print(sheet)
     
-    TA = ['資管','財政','英文','哲學','風管','歷史','東南','歐語']
-    TB = ['日文','傳院藍','土文','政治','心理','經濟','教育','國貿']
-    TC = ['民族','地政','社會','財管','斯語','傳院白','應數','法律']
-    TD = ['資科','統計','阿語','金融','會計','外交','企管','中文']
+    TA = ['企管', '統計', '創國', '國貿', '外交', '英文', '日文', '心理']
+    TB = ['資管', '應數', '中文', '歷史', '教育', '斯語', '阿語', '政治']
+    TC = ['地政', '資科', '公行', '哲學', '財管', '土文', '風管', '社會']
+    TD = ['法律', '傳院', '會計', '金融', '歐語', '東南', '財政', '經濟']
     
 
     allteam = []
+    # 星期跟數字有間隔就5 沒間隔就4
+    space = 4
     #n team
     for j in range(32):
         line = sheet['無法出賽時間（最多三個時段）'][j].split(', ')
+        # print(line)
         timein = []
         #n time cannot
         for i in range(3):
             if line[i][2] == '一':
-                if line[i][5] == '0':
+                if line[i][space] == '0':
                     timein.append('10')
-                elif line[i][5] == '1':
+                elif line[i][space] == '1':
                     timein.append('11')
-                elif line[i][5] == '2':
+                elif line[i][space] == '2':
                     timein.append('12')
-                elif line[i][5] == '3': 
+                elif line[i][space] == '3': 
                     timein.append('13')
 
             elif line[i][2] == '二':
-                if line[i][5] == '2':
+                if line[i][space] == '2':
                     timein.append('22')
-                elif line[i][5] == '3':
+                elif line[i][space] == '3':
                     timein.append('23')
             
             elif line[i][2] == '三':
-                if line[i][5] == '2':
+                if line[i][space] == '2':
                     timein.append('32')
-                elif line[i][5] == '3':
+                elif line[i][space] == '3':
                     timein.append('33')
             
             elif line[i][2] == '四':
-                if line[i][5] == '2':
+                if line[i][space] == '2':
                     timein.append('42')
-                elif line[i][5] == '3':
+                elif line[i][space] == '3':
                     timein.append('43')
             
             elif line[i][2] == '五':
-                if line[i][5] == '2':
+                if line[i][space] == '2':
                     timein.append('52')
-                elif line[i][5] == '3':
+                elif line[i][space] == '3':
                     timein.append('53')
             
             else:
@@ -105,9 +111,13 @@ if __name__ == "__main__":
 
     allgame = []
     allgame = grouping(8, TA, allteam, allgame)
+    print("TA done")
     allgame = grouping(8, TB, allteam, allgame)
+    print("TB done")
     allgame = grouping(8, TC, allteam, allgame)
+    print("TC done")
     allgame = grouping(8, TD, allteam, allgame)
+    print("TD done")
                 
     print(len(allgame))
     # for i in range(len(allgame)):
