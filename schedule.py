@@ -1,5 +1,7 @@
-# n team *3 12 18 59
+# n team *3 12 18 63
 # allgame row107
+# n_team row 112
+# excel 檢查系所欄位
 
 import pandas as pd
 import random
@@ -9,20 +11,20 @@ def grouping(n, group, allteam, allgame):
     for i in range(n):
         for j in range(i+1, n, 1):
             # n team
-            for k in range(32):
+            for k in range(24):
                 # print(allteam[k].name, group[i])
                 if(allteam[k].name == group[i]):
                     inA = int(k)
                     break
                 
             #n team
-            for k in range(32):
+            for k in range(24):
                 # print(allteam[k].name, group[i])
                 if(allteam[k].name == group[j]):
                     inB = int(k)
                     break
 
-            # print(inA, inB)  
+            # breakpoint()
             allgame.append(Game(allteam[inA], allteam[inB], allteam[inA].time+allteam[inB].time))
     return allgame
 
@@ -47,22 +49,21 @@ class Game:
         self.endgame = True
 
 if __name__ == "__main__":
-    sheet = pd.read_excel("./113學年米克斯混排比賽預賽報名表單-回覆.xlsx")
+    sheet = pd.read_excel("./113學年米克斯混排比賽複賽報名表單 (回覆).xlsx")
     
     # print(sheet)
     
-    TA = ['企管', '統計', '創國', '國貿', '外交', '英文', '日文', '心理']
-    TB = ['資管', '應數', '中文', '歷史', '教育', '斯語', '阿語', '政治']
-    TC = ['地政', '資科', '公行', '哲學', '財管', '土文', '風管', '社會']
-    TD = ['法律', '傳院', '會計', '金融', '歐語', '東南', '財政', '經濟']
-    
+    TA = ['資科', '傳院', '經濟', '阿語', '土文', '公行']
+    TB = ['資管', '社會', '財管', '外交', '會計', '心理']
+    TC = ['企管', '應數', '創國', '地政', '統計', '金融']
+    TD = ['財政', '英文', '教育', '法律', '風管', '中文']
 
     allteam = []
     # 星期跟數字有間隔就5 沒間隔就4
     space = 4
     #n team
-    for j in range(32):
-        line = sheet['無法出賽時間（最多三個時段）'][j].split(', ')
+    for j in range(24):
+        line = sheet['無法出賽時段（最多三個時段）'][j].split(', ')
         # print(line)
         timein = []
         #n time cannot
@@ -110,13 +111,13 @@ if __name__ == "__main__":
     #     print(allteam[i].name, allteam[i].time)
 
     allgame = []
-    allgame = grouping(8, TA, allteam, allgame)
+    allgame = grouping(6, TA, allteam, allgame)
     print("TA done")
-    allgame = grouping(8, TB, allteam, allgame)
+    allgame = grouping(6, TB, allteam, allgame)
     print("TB done")
-    allgame = grouping(8, TC, allteam, allgame)
+    allgame = grouping(6, TC, allteam, allgame)
     print("TC done")
-    allgame = grouping(8, TD, allteam, allgame)
+    allgame = grouping(6, TD, allteam, allgame)
     print("TD done")
                 
     print(len(allgame))
